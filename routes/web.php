@@ -55,7 +55,7 @@ Route::get('/products', [ProductController::class, 'index'])->name('products.ind
 
 Route::get('dashboard/products/create', [ProductController::class, 'create'])->name('products.create');
 
-
+Route::put('/product/{id}', [App\Http\Controllers\ProductController::class, 'update'])->name('product.update');
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');

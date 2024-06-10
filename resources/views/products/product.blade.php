@@ -3,16 +3,21 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
-    @foreach($products as $product)
-        <h1>{{ $product->name }}</h1>
-        <p>Description: {{ $product->description }}</p>
-        <p>Price: ${{ $product->price }}</p>
-        @if($product->image_url)
-            <img src="{{ asset('storage/' . $product->image_url) }}" alt="{{ $product->name }}" width="200">
-        @endif
-        <!-- Add other product details here -->
-    @endforeach 
+<div class="container mt-5">
+    <div class="row">
+        @foreach($products as $product)
+            <div class="col-md-4 mb-4">
+                <div class="card h-100">
+                    @if($product->image)
+                        <img src="{{ asset('storage/' . $product->image) }}" class="card-img-top" alt="{{ $product->name }}">
+                    @endif
+                    <div class="card-body">
+                        <h5 class="card-title">{{ $product->name }}</h5>
+                        <p class="card-text">${{ $product->price }}</p>
+                    </div>
+                </div>
+            </div>
+        @endforeach
+    </div>
 </div>
-
 @endsection

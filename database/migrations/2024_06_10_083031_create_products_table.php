@@ -8,11 +8,15 @@ class CreateProductsTable extends Migration
     public function up()
     {
         Schema::create('products', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-            $table->text('description')->nullable();
-            $table->decimal('price', 8, 2);
-            $table->string('image_url')->nullable(); // Add image_url column
+            $table->id(); // ID
+            $table->string('name'); // product name
+            $table->string('color'); // color
+            $table->year('year'); // year
+            $table->string('image')->nullable(); // image
+            $table->integer('storage'); // storage
+            $table->decimal('price', 8, 2); // price
+            $table->integer('ram'); // ram
+            $table->string('display'); // display
             $table->timestamps();
         });
     }
@@ -21,5 +25,4 @@ class CreateProductsTable extends Migration
     {
         Schema::dropIfExists('products');
     }
-    
 }
