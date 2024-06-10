@@ -34,7 +34,7 @@
                 <td>{{ $product->display }}</td>
                 <td>
                     <!-- Add the edit button -->
-                    <a href="{{ route('product.edit', $product->id) }}" class="btn btn-primary">Edit</a>
+                    <a href="{{ route('products.edit', $product->id) }}" class="btn btn-primary">Edit</a>
                 </td>
             </tr>
             @endforeach
@@ -64,8 +64,14 @@
         </div>
         <div class="form-group">
             <label for="storage">Storage</label>
-            <input type="number" name="storage" id="storage" class="form-control" required>
+            <select name="storage" id="storage" class="form-control" required>
+                <option value="128">128GB</option>
+                <option value="256">256GB</option>
+                <option value="512">512GB</option>
+                <option value="1024">1TB</option>
+            </select>
         </div>
+
         <div class="form-group">
             <label for="price">Price</label>
             <input type="number" name="price" id="price" class="form-control" required>

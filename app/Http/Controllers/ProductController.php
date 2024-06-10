@@ -34,9 +34,46 @@ class ProductController extends Controller
     {
         // Retrieve the product from the database
         $product = Product::find($id);
-    
+
         // Pass the product to the view
         return view('dashboard.edit', compact('product'));
+    }
+
+    public function update(Request $request, $id)
+    {
+        // Retrieve the product from the database
+        $product = Product::find($id);
+
+        // Validate the form data
+        $validatedData = $request->validate([
+            'name' => 'required|string|max:255',
+            'color' => 'required|string|max:255',
+            'year' => 'required|integer',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'storage' => 'required|integer',
+            'price' => 'required|numeric|min:0',
+            'ram' => 'required|integer',
+            'display' => 'required|string|max:255',
+        ]);
+
+        // Handle file upload
+        if ($request->hasFile('image')) {
+            $imagePath = $request->file('image')->store('images', 'public');
+            $product->image = $imagePath;
+        }
+
+        // Update the product
+        $product->name = $validatedData['name'];
+        $product->color = $validatedData['color'];
+        $product->year = $validatedData['year'];
+        $product->storage = $validatedData['storage'];
+        $product->price = $validatedData['price'];
+        $product->ram = $validatedData['ram'];
+        $product->display = $validatedData['display'];
+        $product->save();
+
+        // Redirect the user after updating the product
+        return redirect()->route('products.create')->with('success', 'Product updated successfully!');
     }
 
 
@@ -75,6 +112,6 @@ class ProductController extends Controller
         $product->save();
 
         // Redirect the user after adding the product
-        return redirect()->route('home')->with('success', 'Product added successfully!');
+        return redirect()->route('products.create')->with('success', 'Product added successfully!');
     }
 }
