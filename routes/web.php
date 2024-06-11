@@ -39,16 +39,17 @@ Route::middleware('auth')->group(function () {
 // routes/web.php
 Route::get('/products/{id}', [ProductController::class, 'show'])->name('products.show');
 // routes/web.php
-Route::post('/cart/add/{product}', [CartController::class, 'add'])->name('cart.add');
+Route::post('/cart/add/{id}', [CartController::class, 'add'])->name('cart.add');
 
 
 Route::resource('customers', 'App\Http\Controllers\CustomerController');
 
 
 
-
 // Additional authenticated routes
 Route::middleware(['auth'])->group(function () {
+Route::get('/cart', [CartController::class, 'show'])->name('cart.show');
+
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::put('/products/{id}', [ProductController::class, 'update'])->name('products.update');
     Route::get('dashboard/products/create', [ProductController::class, 'create'])->name('products.create');

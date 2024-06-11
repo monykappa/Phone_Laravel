@@ -45,8 +45,17 @@ class User extends Authenticatable
     {
         return $this->hasOne(Cart::class, 'user_id');
     }
-    
 
+    public function cartItems()
+    {
+        return $this->hasMany(Cart::class);
+    }
+
+    public function products()
+    {
+        return $this->belongsToMany(Product::class)->withPivot('quantity');
+    }
+    
     public function orders()
     {
         return $this->hasMany(Order::class);

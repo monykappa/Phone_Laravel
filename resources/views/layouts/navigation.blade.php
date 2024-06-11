@@ -22,7 +22,7 @@
 
 
                     <li class="nav-item">
-                        <a class="nav-link" href="checkout.html">Checkout</a>
+                        <a class="nav-link" href="{{ route('cart.show') }}">Cart</a>
                     </li>
                     <li class="nav-item dropdown">
                         <a class="dropdown-toggle nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">About</a>
