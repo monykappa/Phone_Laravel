@@ -78,12 +78,31 @@
         </div>
         <div class="form-group">
             <label for="ram">RAM</label>
-            <input type="number" name="ram" id="ram" class="form-control" required>
+            <select name="ram" id="ram" class="form-control" required>
+                <option value="4">4GB</option>
+                <option value="6">6GB</option>
+                <option value="8">8GB</option>
+                <option value="12">12GB</option>
+                <option value="16">16GB</option>
+            </select>
         </div>
         <div class="form-group">
-            <label for="display">Display</label>
-            <input type="text" name="display" id="display" class="form-control" required>
-        </div>
+                    <label for="display">Display</label>
+                    <select name="display" id="display" class="form-control" required>
+                        <option value="5.9">5.9 inches</option>
+                        <option value="6">6 inches</option>
+                        <option value="6.1">6.1 inches</option>
+                        <option value="6.2">6.2 inches</option>
+                        <option value="6.3">6.3 inches</option>
+                        <option value="6.4">6.4 inches</option>
+                        <option value="6.5">6.5 inches</option>
+                        <option value="6.6">6.6 inches</option>
+                        <option value="6.7">6.7 inches</option>
+                        <option value="6.8">6.8 inches</option>
+                        <option value="6.9">6.9 inches</option>
+                        <option value="7">7 inches</option>
+                    </select>
+                </div>
         <button type="submit" class="btn btn-primary">Create Product</button>
     </form>
 </div>

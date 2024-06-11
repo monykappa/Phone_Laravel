@@ -76,7 +76,15 @@ class ProductController extends Controller
         return redirect()->route('products.create')->with('success', 'Product updated successfully!');
     }
 
-
+    public function show($id)
+    {
+        // Retrieve the product by its ID
+        $product = Product::findOrFail($id);
+    
+        // Pass the product to the view
+        return view('products.show', compact('product'));
+    }
+    
 
     public function store(Request $request)
     {

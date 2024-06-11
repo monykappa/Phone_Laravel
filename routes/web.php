@@ -1,9 +1,15 @@
 <?php
+
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\CartController;
+
+
+
 
 // Public routes
 Route::get('/', function () {
@@ -27,7 +33,19 @@ Route::middleware('auth')->group(function () {
     Route::get('/products/{product}', [ProductController::class, 'show'])->name('products.show');
     Route::get('/products', [ProductController::class, 'index'])->name('products.index');
     Route::get('/products/{id}/edit', [ProductController::class, 'edit'])->name('products.edit');
+    
 });
+
+// routes/web.php
+Route::get('/products/{id}', [ProductController::class, 'show'])->name('products.show');
+// routes/web.php
+Route::post('/cart/add/{product}', [CartController::class, 'add'])->name('cart.add');
+
+
+Route::resource('customers', 'App\Http\Controllers\CustomerController');
+
+
+
 
 // Additional authenticated routes
 Route::middleware(['auth'])->group(function () {
@@ -36,5 +54,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('dashboard/products/create', [ProductController::class, 'create'])->name('products.create');
 });
 
+
+
 // Authentication routes provided by Breeze
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
