@@ -2,50 +2,84 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Models\Product;
 use App\Models\Cart;
-use Illuminate\Support\Facades\Auth;
+use App\Models\CartItem;
+use App\Models\Product;
+use App\Models\Order;
+use App\Models\OrderItem;
+
+use Illuminate\Http\Request;
 
 class CartController extends Controller
 {
-    // CartController.php
-
-    public function show()
+    public function show(CartItem $cartItem)
     {
-        // Assuming the authenticated user is the one whose cart you want to display
-        $user = auth()->user();
-
-        // Retrieve the products in the user's cart
-        $products = $user->products;
-
-        // Pass the products to a view for display
-        return view('carts.cart', compact('products'));
+        return view('carts.show', compact('cartItem'));
     }
-    
-
-    public function add(Request $request, $id)
+    public function index()
     {
-        // Check if user is authenticated
-        if (Auth::check()) {
-            // Find the product
-            $product = Product::find($id);
+        $cart = auth()->user()->cart;
+        $cartItems = collect();
 
-            // Check if product exists
-            if ($product) {
-                // Create a new cart entry
-                $cart = new Cart();
-                $cart->user_id = Auth::id();
-                $cart->product_id = $id;
-                $cart->save();
-
-                // Redirect back with a success message
-                return back()->with('success', 'Product added to cart successfully!');
-            } else {
-                return back()->with('error', 'Product not found.');
-            }
-        } else {
-            return redirect()->route('login')->with('error', 'Please log in to add products to cart.');
+        if ($cart) {
+            $cartItems = $cart->cartItems()->with('product')->get();
+            // Uncomment the line below if you need to debug the retrieved data
+            // dd($cartItems->toArray());
         }
+
+        return view('carts.index', compact('cartItems'));
+    }
+
+    public function store(Request $request, Product $product)
+    {
+        $user = auth()->user();
+        $cart = $user->cart;
+
+        if (!$cart) {
+            $cart = Cart::create(['user_id' => $user->id]);
+        }
+
+        $cartItem = $cart->cartItems()->where('product_id', $product->id)->first();
+
+        if ($cartItem) {
+            $cartItem->quantity++;
+            $cartItem->save();
+        } else {
+            $cart->cartItems()->create([
+                'product_id' => $product->id,
+                'quantity' => 1,
+            ]);
+        }
+
+        return redirect()->back()->with('success', 'Product added to cart!');
+    }
+    public function storeOrder()
+    {
+        $cart = auth()->user()->cart;
+
+        if (!$cart || $cart->cartItems->isEmpty()) {
+            return redirect()->back()->with('error', 'Your cart is empty.');
+        }
+
+        $order = Order::create(['user_id' => auth()->user()->id]);
+
+        foreach ($cart->cartItems as $cartItem) {
+            OrderItem::create([
+                'order_id' => $order->id,
+                'product_id' => $cartItem->product_id,
+                'quantity' => $cartItem->quantity,
+            ]);
+        }
+
+        // Clear the cart after ordering
+        $cart->cartItems()->delete();
+
+        return redirect()->route('carts.index')->with('success', 'Order placed successfully!');
+    }
+    public function destroy(CartItem $cartItem)
+    {
+        $cartItem->delete();
+
+        return redirect()->route('carts.index')->with('success', 'Product removed from cart successfully!');
     }
 }

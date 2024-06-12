@@ -35,6 +35,11 @@
                 <td>
                     <!-- Add the edit button -->
                     <a href="{{ route('products.edit', $product->id) }}" class="btn btn-primary">Edit</a>
+                    <form action="{{ route('products.destroy', $product->id) }}" method="POST">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="btn btn-danger">Delete</button>
+                    </form>
                 </td>
             </tr>
             @endforeach
@@ -87,22 +92,22 @@
             </select>
         </div>
         <div class="form-group">
-                    <label for="display">Display</label>
-                    <select name="display" id="display" class="form-control" required>
-                        <option value="5.9">5.9 inches</option>
-                        <option value="6">6 inches</option>
-                        <option value="6.1">6.1 inches</option>
-                        <option value="6.2">6.2 inches</option>
-                        <option value="6.3">6.3 inches</option>
-                        <option value="6.4">6.4 inches</option>
-                        <option value="6.5">6.5 inches</option>
-                        <option value="6.6">6.6 inches</option>
-                        <option value="6.7">6.7 inches</option>
-                        <option value="6.8">6.8 inches</option>
-                        <option value="6.9">6.9 inches</option>
-                        <option value="7">7 inches</option>
-                    </select>
-                </div>
+            <label for="display">Display</label>
+            <select name="display" id="display" class="form-control" required>
+                <option value="5.9">5.9 inches</option>
+                <option value="6">6 inches</option>
+                <option value="6.1">6.1 inches</option>
+                <option value="6.2">6.2 inches</option>
+                <option value="6.3">6.3 inches</option>
+                <option value="6.4">6.4 inches</option>
+                <option value="6.5">6.5 inches</option>
+                <option value="6.6">6.6 inches</option>
+                <option value="6.7">6.7 inches</option>
+                <option value="6.8">6.8 inches</option>
+                <option value="6.9">6.9 inches</option>
+                <option value="7">7 inches</option>
+            </select>
+        </div>
         <button type="submit" class="btn btn-primary">Create Product</button>
     </form>
 </div>

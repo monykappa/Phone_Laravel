@@ -17,7 +17,17 @@ class ProductController extends Controller
     }
 
 
+    public function destroy($id)
+    {
+        // Retrieve the product from the database
+        $product = Product::findOrFail($id);
 
+        // Delete the product
+        $product->delete();
+
+        // Redirect the user after deleting the product
+        return redirect()->route('products.index')->with('success', 'Product deleted successfully!');
+    }
 
     public function create()
     {

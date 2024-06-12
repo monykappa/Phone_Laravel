@@ -9,6 +9,7 @@
     <link href="{{ asset('vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
 
     <!-- Additional CSS Files -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="{{ asset('assets/css/flex-slider.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/owl.css') }}">
@@ -29,12 +30,12 @@
                     <li class="nav-item">
                         <a class="nav-link text-dark" href="{{ route('products.create') }}">Product</a>
                     </li>
+                    <!-- resources/views/layouts/navbar.blade.php or similar file -->
                     <li class="nav-item">
-                        <a class="nav-link text-dark" href="#">Orders</a>
+                        <a class="nav-link text-dark" href="{{ route('orders.index') }}">Orders</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" href="">Customers</a>
-                    </li>
+
+                  
                     <!-- Add more navbar links as needed -->
                 </ul>
             </div>

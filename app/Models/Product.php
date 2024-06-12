@@ -7,11 +7,14 @@ use Illuminate\Database\Eloquent\Model;
 
 class Product extends Model
 {
-    
+
     use HasFactory;
     public function users()
-{
-    return $this->belongsToMany(User::class)->withPivot('quantity');
-}
-
+    {
+        return $this->belongsToMany(User::class)->withPivot('quantity');
+    }
+    public function cartItems()
+    {
+        return $this->hasMany(CartItem::class);
+    }
 }

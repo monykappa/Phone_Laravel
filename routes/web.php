@@ -7,7 +7,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\CartController;
-
+use App\Http\Controllers\OrdersController;
 
 
 
@@ -33,7 +33,23 @@ Route::middleware('auth')->group(function () {
     Route::get('/products/{product}', [ProductController::class, 'show'])->name('products.show');
     Route::get('/products', [ProductController::class, 'index'])->name('products.index');
     Route::get('/products/{id}/edit', [ProductController::class, 'edit'])->name('products.edit');
+
+    Route::post('/order', [CartController::class, 'storeOrder'])->name('order.store');
     
+
+    Route::middleware(['auth'])->group(function () {
+        Route::get('/orders', [OrdersController::class, 'index'])->name('orders.index');
+    });
+
+    Route::middleware(['auth'])->group(function () {
+        Route::resource('products', ProductController::class);
+    });
+    // In routes/web.php
+    Route::get('/carts', [CartController::class, 'index'])->name('carts.index');
+    Route::post('/cart/{product}', [CartController::class, 'store'])->name('cart.store');
+    Route::get('/cart', [CartController::class, 'show'])->name('cart.show');
+    Route::get('/cart/{cartItem}', [CartController::class, 'show'])->name('cart.show');
+    Route::delete('/cart/remove/{cartItem}', [CartController::class, 'destroy'])->name('cart.remove');
 });
 
 // routes/web.php
@@ -48,7 +64,7 @@ Route::resource('customers', 'App\Http\Controllers\CustomerController');
 
 // Additional authenticated routes
 Route::middleware(['auth'])->group(function () {
-Route::get('/cart', [CartController::class, 'show'])->name('cart.show');
+    Route::get('/cart', [CartController::class, 'show'])->name('cart.show');
 
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::put('/products/{id}', [ProductController::class, 'update'])->name('products.update');

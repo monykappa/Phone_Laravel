@@ -17,12 +17,8 @@
                     <li class="nav-item">
                         <a href="{{ route('products.index') }}" class="nav-link"> Products</a>
                     </li>
-
-
-
-
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('cart.show') }}">Cart</a>
+                        <a class="nav-link" href="{{ route('carts.index') }}">Cart</a>
                     </li>
                     <li class="nav-item dropdown">
                         <a class="dropdown-toggle nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">About</a>
